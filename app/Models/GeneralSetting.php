@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class GeneralSetting extends Model
+{
+      protected $fillable = ['key', 'value'];
+
+      protected $table="general_settings";
+}

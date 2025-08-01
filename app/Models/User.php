@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+   public function usedQRCodes()
+{
+    return $this->hasMany(ProductQrCode::class, 'used_by');
+}
 }

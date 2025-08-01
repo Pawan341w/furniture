@@ -36,3 +36,18 @@ if (!function_exists('generateProductQRCodes')) {
         return response()->json(['message' => "$count QR codes generated successfully."]);
     }
 }
+
+
+if (!function_exists('format_inr')) {
+
+function format_inr($amount) {
+    if ($amount >= 10000000) {
+        return '₹' . round($amount / 10000000, 2) . ' Cr';
+    } elseif ($amount >= 100000) {
+        return '₹' . round($amount / 100000, 2) . ' L';
+    } elseif ($amount >= 1000) {
+        return '₹' . round($amount / 1000, 2) . ' K';
+    }
+    return '₹' . $amount;
+}
+}

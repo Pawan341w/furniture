@@ -12,24 +12,23 @@
     <div class="card shadow-sm mb-5">
         <div class="card-body">
             <form id="qrForm">
-    @csrf
-    <input type="hidden" id="product_id" value="{{ $product->id }}">
-    <div class="row">
-        <div class="col-md-3 mb-3">
-            <label for="count" class="form-label">QR Count (max 20)</label>
-            <input type="number" name="count" id="count" class="form-control" min="1" max="20" required placeholder="e.g. 5">
-        </div>
-        <div class="col-md-6 mb-3">
-            <label for="coin_rewards" class="form-label">Coin Rewards (comma-separated)</label>
-            <input type="text" name="coin_rewards" id="coin_rewards" class="form-control" placeholder="e.g. 10,20,30">
-            <small class="text-muted">Match rewards with QR count. Default = 0 if empty.</small>
-        </div>
-        <div class="col-md-3 d-flex align-items-end mb-3">
-            <button type="submit" class="btn btn-primary w-100">Generate QR Codes</button>
-        </div>
-    </div>
-</form>
-
+                @csrf
+                <input type="hidden" id="product_id" value="{{ $product->id }}">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="count" class="form-label">QR Count (max 20)</label>
+                        <input type="number" name="count" id="count" class="form-control" min="1" max="20" required placeholder="e.g. 5">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="coin_rewards" class="form-label">Coin Rewards (comma-separated)</label>
+                        <input type="text" name="coin_rewards" id="coin_rewards" class="form-control" placeholder="e.g. 10,20,30">
+                        <small class="text-muted">Match rewards with QR count. Default = 0 if empty.</small>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end mb-3">
+                        <button type="submit" class="btn btn-primary w-100">Generate QR Codes</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -38,6 +37,14 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <h5 class="mb-4">Generated QR Codes</h5>
+
+            {{-- Filter Buttons --}}
+            <div class="mb-3">
+                <button class="btn btn-outline-success me-2" onclick="filterQR('used')">Used</button>
+                <button class="btn btn-outline-secondary me-2" onclick="filterQR('not_used')">Not Used</button>
+                <button class="btn btn-outline-dark" onclick="filterQR('all')">Show All</button>
+            </div>
+
             <div class="table-responsive">
                 <table id="qrTable" class="table table-bordered table-hover align-middle text-center">
                     <thead class="table-light">
@@ -58,7 +65,7 @@
                             <td>{{ $index + 1 }}</td>
                             <td>
                                 @if($qr->path && file_exists(public_path($qr->path)))
-<img src="{{ asset($qr->path) }}" alt="QR" style="height: 80px;     border-radius: 0;">
+                                    <img src="{{ asset($qr->path) }}" alt="QR" style="height: 80px; border-radius: 0;">
                                 @else
                                     <span class="text-muted">N/A</span>
                                 @endif
@@ -90,75 +97,90 @@
 </div>
 @endsection
 
-
-    <script>
-
-        function printQRCode(code) {
-            const imageUrl = `/qr_codes/${code}.png`;
-            const w = window.open('', '', 'width=400,height=400');
-            w.document.write(`
-                <html>
-                <head>
-                    <title>Print QR Code</title>
-                    <style>
-                        body {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            height: 100vh;
-                            margin: 0;
-                            background: white;
-                        }
-                        img {
-                            width: 300px;
-                            height: 300px;
-                            object-fit: contain;
-                            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                        }
-                    </style>
-                </head>
-                <body>
-                    <img src="${imageUrl}" alt="QR Code">
-                </body>
-                </html>
-            `);
-            w.document.close();
-            w.focus();
-            setTimeout(() => {
-                w.print();
-                w.close();
-            }, 500);
-        }
-    </script>
+@section('script')
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("qrForm").addEventListener("submit", function (e) {
-        e.preventDefault();
+    function printQRCode(code) {
+        const imageUrl = `/qr_codes/${code}.png`;
+        const w = window.open('', '', 'width=400,height=400');
+        w.document.write(`
+            <html>
+            <head>
+                <title>Print QR Code</title>
+                <style>
+                    body {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        margin: 0;
+                        background: white;
+                    }
+                    img {
+                        width: 300px;
+                        height: 300px;
+                        object-fit: contain;
+                        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                    }
+                </style>
+            </head>
+            <body>
+                <img src="${imageUrl}" alt="QR Code">
+            </body>
+            </html>
+        `);
+        w.document.close();
+        w.focus();
+        setTimeout(() => {
+            w.print();
+            w.close();
+        }, 500);
+    }
 
-        const productId = document.getElementById("product_id").value;
-        const count = document.getElementById("count").value;
-        const coin_rewards = document.getElementById("coin_rewards").value;
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    function filterQR(filterType) {
+        const rows = document.querySelectorAll('#qrTable tbody tr');
 
-        Swal.fire({
-            title: 'Generating QR Codes...',
-            allowOutsideClick: false,
-            didOpen: () => Swal.showLoading()
+        rows.forEach(row => {
+            const usedCell = row.querySelector('td:nth-child(5) span');
+            const isUsed = usedCell && usedCell.classList.contains('bg-danger');
+
+            if (filterType === 'used') {
+                row.style.display = isUsed ? '' : 'none';
+            } else if (filterType === 'not_used') {
+                row.style.display = !isUsed ? '' : 'none';
+            } else {
+                row.style.display = '';
+            }
         });
+    }
 
-        fetch(`/qr/generate`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": csrfToken,
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                product_id: productId,
-                count: count,
-                coin_rewards: coin_rewards
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("qrForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const productId = document.getElementById("product_id").value;
+            const count = document.getElementById("count").value;
+            const coin_rewards = document.getElementById("coin_rewards").value;
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            Swal.fire({
+                title: 'Generating QR Codes...',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            fetch(`/qr/generate`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken,
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    count: count,
+                    coin_rewards: coin_rewards
+                })
             })
-        })
             .then(response => response.json())
             .then(data => {
                 if (data.status) {
@@ -185,6 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     text: 'An unexpected error occurred.',
                 });
             });
+        });
     });
-});
 </script>
+@endsection

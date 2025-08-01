@@ -15,6 +15,13 @@ class ProductController extends Controller
         return view('admin.products.index', compact('products', 'categories'));
     }
 
+    public  function qr_mang()
+    {
+                $products = Product::get();
+                        return view('admin.products.qr_mang', compact('products'));
+
+
+    }
     public function store(Request $request)
     {
         $data = $request->validate([

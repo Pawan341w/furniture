@@ -10,7 +10,7 @@ class ProductQRCodeController extends Controller
     public function show($productId)
     {
         $product = Product::findOrFail($productId);
-        $qrCodes = ProductQRCode::where('product_id', $productId)->get();
+        $qrCodes = ProductQRCode::where('product_id', $productId)->orderby('id','desc')->get();
 
         return view('admin.products.qr_list', compact('product', 'qrCodes'));
     }

@@ -225,6 +225,19 @@
     </a>
 </li>
 
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('qr.mang') }}">
+        <span class="menu-title">Qr Management</span>
+<i class="mdi mdi-qrcode menu-icon"></i>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('users.index') }}">
+        <span class="menu-title">User Management</span>
+<i class="mdi mdi-account-multiple menu-icon"></i>
+    </a>
+</li>
+
             {{--<li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
                 <span class="menu-title">Page Layouts</span>
