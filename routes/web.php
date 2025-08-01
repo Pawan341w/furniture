@@ -63,3 +63,13 @@ Route::prefix('general-settings')->controller(GeneralSettingController::class)->
     Route::post('/{id}', 'update');
     Route::delete('/{id}', 'destroy');
 });
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::prefix('general-settings')->name('general-settings.')->controller(GeneralSettingController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{id}', 'edit')->name('edit');
+        Route::post('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+    });
+});
