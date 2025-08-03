@@ -32,7 +32,7 @@
 
                         <td>{{ $user->email }}</td>
 
-                        <td>{{ format_inr($user->wallet) }}</td>
+                        <td>{{'₹'. num_format($user->wallet) }}</td>
 <td>
     <span class="badge bg-info viewUsedQRCodes" style="cursor:pointer" data-id="{{ $user->id }}">
         {{ $user->usedQRCodes->count() }} used

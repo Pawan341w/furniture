@@ -11,7 +11,7 @@
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createSettingModal">+ Add Setting</button>
     </div>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="table">
         <thead class="table-light">
             <tr>
                 <th>#</th>
@@ -150,7 +150,7 @@
         e.preventDefault();
         const formData = new FormData(this);
         $.ajax({
-            url: '/admin/general-settings',
+            url: '/general-settings',
             method: 'POST',
             data: formData,
             contentType: false,
@@ -163,7 +163,7 @@
 
     $(document).on('click', '.editBtn', function () {
         const id = $(this).data('id');
-        $.get(`/admin/general-settings/${id}`, function (data) {
+        $.get(`/general-settings/${id}`, function (data) {
             const form = document.getElementById('editForm');
             $(form).find('[name="id"]').val(data.id);
             $(form).find('[name="key"]').val(data.key);
@@ -183,7 +183,7 @@
         const id = $(this).find('[name="id"]').val();
         const formData = new FormData(this);
         $.ajax({
-            url: `/admin/general-settings/${id}`,
+            url: `/general-settings/${id}`,
             method: 'POST',
             data: formData,
             contentType: false,
@@ -206,7 +206,7 @@
         }).then(result => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/admin/general-settings/${id}`,
+                    url: `/general-settings/${id}`,
                     type: 'DELETE',
                     headers: { 'X-CSRF-TOKEN': token },
                     success: res => {

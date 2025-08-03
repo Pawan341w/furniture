@@ -19,7 +19,7 @@ return new class extends Migration
     $table->string('message')->nullable();
     $table->string('utr')->nullable();
     $table->string('transaction_id')->unique(); // Unique transaction ID
-    $table->decimal('balance_after', 12, 2);
+    $table->decimal('balance_before', 12, 2);
     $table->timestamps();
         });
     }

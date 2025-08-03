@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../assets/vendors/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="../assets/css/vertical-light/style.css">
-    <link rel="shortcut icon" href="../assets/images/favicon.png" />
+    <link rel="shortcut icon" href="{{ get_setting('favicon_icon') }}" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/jsgrid/dist/jsgrid.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -72,4 +72,14 @@
             ]
         });
     });
+$(document).ready(function () {
+    $('#table').DataTable({
+        pageLength: 10,
+        lengthChange: false,
+        columnDefs: [
+            { orderable: false, targets: [1, 7] }
+        ]
+    });
+});
+
 </script>

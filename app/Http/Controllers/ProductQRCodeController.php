@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ProductQRCodeController extends Controller
 {
+
     public function show($productId)
     {
         $product = Product::findOrFail($productId);

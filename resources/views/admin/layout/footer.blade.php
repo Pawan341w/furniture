@@ -16,10 +16,7 @@
     <script src="../assets/js/settings.js"></script>
     <script src="../assets/js/todolist.js"></script>
     <script src="../assets/js/jquery.cookie.js"></script>
-    {{-- <script src="../assets/js/dashboard.js"></script>
-    <script src="../../../assets/js/js-grid.js"></script>
-    <script src="../../../assets/vendors/jsgrid/jsgrid.min.js"></script>
-     <script src="../../../assets/js/enc_dec.js"></script> --}}
+
 
     @yield('script')
 

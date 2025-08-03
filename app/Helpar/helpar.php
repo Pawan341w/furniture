@@ -86,16 +86,16 @@ if (!function_exists('generateProductQRCodes')) {
 }
 
 
-if (!function_exists('format_inr')) {
+if (!function_exists('num_format')) {
 
-function format_inr($amount) {
+function num_format($amount) {
     if ($amount >= 10000000) {
-        return '₹' . round($amount / 10000000, 2) . ' Cr';
+        return  round($amount / 10000000, 2) . ' Cr';
     } elseif ($amount >= 100000) {
-        return '₹' . round($amount / 100000, 2) . ' L';
+        return  round($amount / 100000, 2) . ' L';
     } elseif ($amount >= 1000) {
-        return '₹' . round($amount / 1000, 2) . ' K';
+        return  round($amount / 1000, 2) . ' K';
     }
-    return '₹' . $amount;
+    return  $amount;
 }
 }
