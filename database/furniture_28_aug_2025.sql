@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Aug 21, 2025 at 11:06 AM
--- Server version: 10.11.13-MariaDB
--- PHP Version: 8.3.22
+-- Host: localhost
+-- Generation Time: Aug 28, 2025 at 08:31 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wapliain_furni`
+-- Database: `furniture`
 --
 
 -- --------------------------------------------------------
@@ -48,9 +48,8 @@ CREATE TABLE `addresses` (
 --
 
 INSERT INTO `addresses` (`id`, `user_id`, `address_line1`, `address_line2`, `landmark`, `city`, `state`, `country`, `pincode`, `address_type`, `is_default`, `created_at`, `updated_at`) VALUES
-(3, 7, 'D-12', 'Sector 5, Malviya Nagar', 'Behind Fortis Hospital', 'Jaipur', 'Rajasthan', 'India', '302033', 'home', 0, '2025-08-13 15:31:22', '2025-08-20 10:41:11'),
 (5, 6, 'kalwar road champapura', 'we', 'we', 'jaipur', 'rajsthan', 'India', '303706', 'home', 0, '2025-08-14 04:58:59', '2025-08-14 04:58:59'),
-(6, 7, '15 Govindpuricolony', 'sikar road', 'nawal tower', 'Jaipur', 'Rajasthan', 'India', '302022', 'work', 0, '2025-08-18 04:16:14', '2025-08-18 04:16:14');
+(8, 7, 'waplia digital solutions private limited', 'sector 5', 'malviya nagar', 'jaipur', 'rajsthan', 'India', '303706', 'home', 0, '2025-08-27 23:52:29', '2025-08-27 23:52:29');
 
 -- --------------------------------------------------------
 
@@ -96,7 +95,7 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('laravel-cache-general_settings_all', 'a:10:{s:4:\"logo\";s:62:\"/storage/settings/P1Hy1qQaFbFTVb960OyJ1YRTPhkZaukP8oKUezOi.png\";s:6:\"banner\";s:63:\"/storage/settings/cj0wl6eiiF16rq3N2KRhf7eNsKSABy7MHf6qxKlJ.webp\";s:5:\"email\";s:15:\"admin@gmail.com\";s:9:\"mobile_no\";s:11:\"95621263317\";s:9:\"mini_logo\";s:62:\"/storage/settings/Sbi6w3QxW9cmQwhCkWB2gxtsQ95SZmmSYlA4aOoV.png\";s:12:\"favicon_icon\";s:62:\"/storage/settings/XHsdplI9TgqbJJxWqpuujTaXvgjLEB7FYhM4rJyM.png\";s:4:\"coin\";s:1:\"1\";s:8:\"app_name\";s:9:\"Furniture\";s:15:\"shipping_charge\";s:1:\"0\";s:16:\"Shipping Address\";s:56:\"D-829, Sector 5, Malviya Nagar, Jaipur, Rajasthan 302017\";}', 1755777790);
+('laravel-cache-general_settings_all', 'a:10:{s:4:\"logo\";s:62:\"/storage/settings/P1Hy1qQaFbFTVb960OyJ1YRTPhkZaukP8oKUezOi.png\";s:6:\"banner\";s:63:\"/storage/settings/cj0wl6eiiF16rq3N2KRhf7eNsKSABy7MHf6qxKlJ.webp\";s:5:\"email\";s:15:\"admin@gmail.com\";s:9:\"mobile_no\";s:11:\"95621263317\";s:9:\"mini_logo\";s:62:\"/storage/settings/Sbi6w3QxW9cmQwhCkWB2gxtsQ95SZmmSYlA4aOoV.png\";s:12:\"favicon_icon\";s:62:\"/storage/settings/XHsdplI9TgqbJJxWqpuujTaXvgjLEB7FYhM4rJyM.png\";s:4:\"coin\";s:1:\"1\";s:8:\"app_name\";s:9:\"Furniture\";s:15:\"shipping_charge\";s:1:\"0\";s:16:\"Shipping Address\";s:56:\"D-829, Sector 5, Malviya Nagar, Jaipur, Rajasthan 302017\";}', 1756364907);
 
 -- --------------------------------------------------------
 
@@ -332,7 +331,6 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 CREATE TABLE `orders` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `address_id` bigint(20) UNSIGNED NOT NULL,
   `address` varchar(255) NOT NULL,
   `order_number` varchar(255) NOT NULL,
   `product_name` text NOT NULL,
@@ -353,43 +351,19 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `address_id`, `address`, `order_number`, `product_name`, `product_amount`, `shipping_charge`, `total_amount`, `payment_method`, `payment_status`, `order_status`, `ordered_at`, `delivered_at`, `created_at`, `updated_at`, `txn_id`) VALUES
-(2, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-689DB5B23C65E', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'cancelled', '2025-08-14 10:08:50', NULL, '2025-08-14 10:08:50', '2025-08-19 11:49:09', NULL),
-(3, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-689DB5B356C70', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'cancelled', '2025-08-14 10:08:51', NULL, '2025-08-14 10:08:51', '2025-08-19 11:50:28', NULL),
-(6, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-689E142285D3E', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'pending', '2025-08-14 16:51:46', NULL, '2025-08-14 16:51:46', '2025-08-14 16:51:46', NULL),
-(7, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-689E14354A554', 'test1', 3.00, 50.00, 53.00, 'wallet', 'pending', 'pending', '2025-08-14 16:52:05', NULL, '2025-08-14 16:52:05', '2025-08-14 16:52:05', NULL),
-(8, 6, 5, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EB7236CC8B', 'test1', 3.00, 50.00, 53.00, 'wallet', 'pending', 'pending', '2025-08-15 04:27:15', NULL, '2025-08-15 04:27:15', '2025-08-15 04:27:15', NULL),
-(9, 6, 5, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EB8B0AD570', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'pending', '2025-08-15 04:33:52', NULL, '2025-08-15 04:33:52', '2025-08-15 04:33:52', NULL),
-(10, 6, 5, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EB99AB08FD', 'test1', 3.00, 50.00, 53.00, 'wallet', 'pending', 'pending', '2025-08-15 04:37:46', NULL, '2025-08-15 04:37:46', '2025-08-15 04:37:46', NULL),
-(11, 6, 5, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EB9FDEBA34', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'pending', '2025-08-15 04:39:25', NULL, '2025-08-15 04:39:25', '2025-08-15 04:39:25', NULL),
-(12, 6, 5, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EBB4CA06E8', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'processing', '2025-08-15 04:45:00', NULL, '2025-08-15 04:45:00', '2025-08-19 06:49:50', NULL),
-(13, 6, 5, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EBCBC2FAB2', 'test1', 3.00, 50.00, 53.00, 'wallet', 'pending', 'pending', '2025-08-15 04:51:08', NULL, '2025-08-15 04:51:08', '2025-08-15 04:51:08', NULL),
-(14, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A2A91D8AD9D', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'processing', '2025-08-18 04:16:29', NULL, '2025-08-18 04:16:29', '2025-08-18 05:40:13', NULL),
-(15, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A2AE479C6BC', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'cancelled', '2025-08-18 04:38:31', NULL, '2025-08-18 04:38:31', '2025-08-19 12:15:59', NULL),
-(16, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A2B6DB7CCB5', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'processing', '2025-08-18 05:15:07', NULL, '2025-08-18 05:15:07', '2025-08-19 12:30:57', NULL),
-(17, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A2B6DD47267', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'delivered', '2025-08-18 05:15:09', '2025-08-19 10:31:40', '2025-08-18 05:15:09', '2025-08-19 10:31:40', NULL),
-(18, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A2B6DD78185', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'delivered', '2025-08-18 05:15:09', '2025-08-19 12:29:40', '2025-08-18 05:15:09', '2025-08-19 12:29:40', NULL),
-(19, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A2B6DDA37E4', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'delivered', '2025-08-18 05:15:09', '2025-08-19 11:06:07', '2025-08-18 05:15:09', '2025-08-19 11:06:11', NULL),
-(20, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A425E61B6A0', 'test', 2.00, 10.00, 12.00, 'wallet', 'pending', 'returned', '2025-08-19 07:21:10', '2025-08-19 12:26:27', '2025-08-19 07:21:10', '2025-08-19 12:28:00', NULL),
-(21, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A426562F32B', 'test', 2.00, 10.00, 12.00, 'wallet', 'pending', 'delivered', '2025-08-19 07:23:02', '2025-08-19 12:20:31', '2025-08-19 07:23:02', '2025-08-19 12:20:31', NULL),
-(22, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A427CF78D98', 'test', 2.00, 0.00, 2.00, 'wallet', 'pending', 'pending', '2025-08-19 07:29:19', NULL, '2025-08-19 07:29:19', '2025-08-19 07:29:19', NULL),
-(23, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A438048C3C4', 'wfsdgvc', 3.00, 0.00, 3.00, 'wallet', 'pending', 'pending', '2025-08-19 08:38:28', NULL, '2025-08-19 08:38:28', '2025-08-19 08:38:28', NULL),
-(24, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A4381A9D816', 'wfsdgvc', 3.00, 0.00, 3.00, 'wallet', 'pending', 'pending', '2025-08-19 08:38:50', NULL, '2025-08-19 08:38:50', '2025-08-19 08:38:50', NULL),
-(25, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A5AC18D69F5', 'Home Interior With Vintage Furniture', 1200.00, 0.00, 1200.00, 'wallet', 'pending', 'pending', '2025-08-20 11:06:00', NULL, '2025-08-20 11:06:00', '2025-08-20 11:06:00', NULL),
-(26, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A5ACA3144F1', 'China classic furniture Special features Culture', 12000.00, 0.00, 12000.00, 'wallet', 'pending', 'pending', '2025-08-20 11:08:19', NULL, '2025-08-20 11:08:19', '2025-08-20 11:08:19', NULL),
-(27, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A5ACB0D21DD', 'Bad Home Furniture', 20000.00, 0.00, 20000.00, 'wallet', 'pending', 'pending', '2025-08-20 11:08:32', NULL, '2025-08-20 11:08:32', '2025-08-20 11:08:32', NULL),
-(28, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A5ACC57766B', 'Bad Home Furniture', 20000.00, 0.00, 20000.00, 'wallet', 'pending', 'pending', '2025-08-20 11:08:53', NULL, '2025-08-20 11:08:53', '2025-08-20 11:08:53', NULL),
-(29, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A5B7D3B5A1F', 'Home Interior With Vintage Furniture', 1200.00, 0.00, 1200.00, 'wallet', 'pending', 'pending', '2025-08-20 11:56:03', NULL, '2025-08-20 11:56:03', '2025-08-20 11:56:03', NULL),
-(30, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A5B9F5C16E7', 'Home Interior With Vintage Furniture', 1200.00, 0.00, 1200.00, 'wallet', 'pending', 'pending', '2025-08-20 12:05:09', NULL, '2025-08-20 12:05:09', '2025-08-20 12:05:09', NULL),
-(31, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A5BA3100A0C', 'Home Interior With Vintage Furniture', 1200.00, 0.00, 1200.00, 'wallet', 'pending', 'pending', '2025-08-20 12:06:09', NULL, '2025-08-20 12:06:09', '2025-08-20 12:06:09', NULL),
-(32, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A5BDB9C7067', 'Home Interior With Vintage Furniture', 1200.00, 0.00, 1200.00, 'wallet', 'pending', 'pending', '2025-08-20 12:21:13', NULL, '2025-08-20 12:21:13', '2025-08-20 12:21:13', NULL),
-(33, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A5C340756FC', 'Home Interior With Vintage Furniture', 1200.00, 0.00, 1200.00, 'wallet', 'pending', 'pending', '2025-08-20 12:44:48', NULL, '2025-08-20 12:44:48', '2025-08-20 12:44:48', NULL),
-(34, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A5EABA2FF35', 'Chair', 1234.00, 0.00, 1234.00, 'wallet', 'pending', 'pending', '2025-08-20 15:33:14', NULL, '2025-08-20 15:33:14', '2025-08-20 15:33:14', NULL),
-(35, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A6B352DAA0F', 'Home Interior With Vintage Furniture', 1000.00, 0.00, 1000.00, 'wallet', 'pending', 'pending', '2025-08-21 05:49:06', NULL, '2025-08-21 05:49:06', '2025-08-21 05:49:06', NULL),
-(36, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A6CA946148C', 'China classic furniture Special features Culture', 11800.00, 0.00, 11800.00, 'wallet', 'pending', 'cancelled', '2025-08-21 07:28:20', NULL, '2025-08-21 07:28:20', '2025-08-21 08:34:16', NULL),
-(37, 7, 6, '15 Govindpuricolony, Jaipur, Rajasthan, India, 302022', 'ORD-68A6DC00EE783', 'Home Interior With Vintage Furniture', 1000.00, 0.00, 1000.00, 'wallet', 'pending', 'cancelled', '2025-08-21 08:42:40', NULL, '2025-08-21 08:42:40', '2025-08-21 09:22:48', NULL),
-(38, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A6E5BC289DE', 'Home Interior With Vintage Furniture', 1000.00, 0.00, 1000.00, 'wallet', 'pending', 'shipped', '2025-08-21 09:24:12', '2025-08-21 09:26:45', '2025-08-21 09:24:12', '2025-08-21 09:27:01', 'TXN20250821092412HQKP'),
-(39, 7, 3, 'D-12, Jaipur, Rajasthan, India, 302033', 'ORD-68A6EB4054E41', 'China classic furniture Special features Culture', 11800.00, 0.00, 11800.00, 'wallet', 'pending', 'returned', '2025-08-21 09:47:44', NULL, '2025-08-21 09:47:44', '2025-08-21 10:04:38', 'TXN202508210947442LZW');
+INSERT INTO `orders` (`id`, `user_id`, `address`, `order_number`, `product_name`, `product_amount`, `shipping_charge`, `total_amount`, `payment_method`, `payment_status`, `order_status`, `ordered_at`, `delivered_at`, `created_at`, `updated_at`, `txn_id`) VALUES
+(8, 6, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EB7236CC8B', 'test1', 3.00, 50.00, 53.00, 'wallet', 'pending', 'pending', '2025-08-15 04:27:15', NULL, '2025-08-15 04:27:15', '2025-08-15 04:27:15', NULL),
+(9, 6, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EB8B0AD570', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'pending', '2025-08-15 04:33:52', NULL, '2025-08-15 04:33:52', '2025-08-15 04:33:52', NULL),
+(10, 6, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EB99AB08FD', 'test1', 3.00, 50.00, 53.00, 'wallet', 'pending', 'pending', '2025-08-15 04:37:46', NULL, '2025-08-15 04:37:46', '2025-08-15 04:37:46', NULL),
+(11, 6, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EB9FDEBA34', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'pending', '2025-08-15 04:39:25', NULL, '2025-08-15 04:39:25', '2025-08-15 04:39:25', NULL),
+(12, 6, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EBB4CA06E8', 'test product catalog2', 120.00, 50.00, 170.00, 'wallet', 'pending', 'processing', '2025-08-15 04:45:00', NULL, '2025-08-15 04:45:00', '2025-08-19 06:49:50', NULL),
+(13, 6, 'kalwar road champapura, jaipur, rajsthan, India, 303706', 'ORD-689EBCBC2FAB2', 'test1', 3.00, 50.00, 53.00, 'wallet', 'pending', 'pending', '2025-08-15 04:51:08', NULL, '2025-08-15 04:51:08', '2025-08-15 04:51:08', NULL),
+(44, 7, 'waplia digital solutions private limited, jaipur, rajsthan, India, 303706', 'ORD-68AFEBB11CE76', 'Bad Home Furniture', 18000.00, 0.00, 18000.00, 'wallet', 'pending', 'pending', '2025-08-28 00:10:01', NULL, '2025-08-28 00:10:01', '2025-08-28 00:10:01', 'TXN20250828054001O2EC'),
+(45, 7, 'waplia digital solutions private limited, jaipur, rajsthan, India, 303706', 'ORD-68AFEC95658AF', 'Berry Fabric 1-Seater Sofa - Brown', 280.00, 0.00, 280.00, 'wallet', 'pending', 'pending', '2025-08-28 00:13:49', NULL, '2025-08-28 00:13:49', '2025-08-28 00:13:49', 'TXN20250828054349PJIS'),
+(46, 7, 'waplia digital solutions private limited, jaipur, rajsthan, India, 303706', 'ORD-68AFECE5C197B', 'Chair', 1231.00, 0.00, 1231.00, 'wallet', 'pending', 'pending', '2025-08-28 00:15:09', NULL, '2025-08-28 00:15:09', '2025-08-28 00:15:09', 'TXN20250828054509QHHC'),
+(47, 7, 'waplia digital solutions private limited, jaipur, rajsthan, India, 303706', 'ORD-68AFECFFB4237', 'China classic furniture Special features Culture', 11800.00, 0.00, 11800.00, 'wallet', 'pending', 'processing', '2025-08-28 00:15:35', NULL, '2025-08-28 00:15:35', '2025-08-28 00:22:43', 'TXN20250828054535OSFL'),
+(48, 7, 'waplia digital solutions private limited, jaipur, rajsthan, India, 303706', 'ORD-68AFED1E538E4', 'Contemporary elegant luxury living room', 18000.00, 0.00, 18000.00, 'wallet', 'pending', 'cancelled', '2025-08-28 00:16:06', NULL, '2025-08-28 00:16:06', '2025-08-28 00:16:14', 'TXN20250828054606XPT4'),
+(49, 7, 'waplia digital solutions private limited, jaipur, rajsthan, India, 303706', 'ORD-68AFF28C5CBA2', 'Bad Home Furniture', 18000.00, 0.00, 18000.00, 'wallet', 'pending', 'pending', '2025-08-28 00:39:16', NULL, '2025-08-28 00:39:16', '2025-08-28 00:39:16', 'TXN20250828060916LCI8');
 
 -- --------------------------------------------------------
 
@@ -483,16 +457,16 @@ CREATE TABLE `product_catalog` (
 
 INSERT INTO `product_catalog` (`id`, `name`, `slug`, `description`, `price`, `discount_price`, `stock`, `image`, `gallery`, `category_id`, `status`, `created_at`, `updated_at`) VALUES
 (24, 'Home Interior With Vintage Furniture', 'home-interior-with-vintage-furniture', 'Home Interior With Vintage Furniture', 1200.00, 200.00, 4, 'products/2zFSizRDuHIDekt569x4YFnCNnAS6DPty0XGHfI1.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/z35V80Z5tewo928SnutNP0IeHBxj5JD4LkrPbP8l.jpg\\\"]\"', 6, 1, '2025-08-20 10:44:23', '2025-08-21 09:24:12'),
-(25, 'China classic furniture Special features Culture', 'china-classic-furniture-special-features-culture', 'China classic furniture Special features Culture', 12000.00, 200.00, 98, 'products/OklDBkRM7wIEVwWBj1UlLJ4MYzT0OuZnyj2PfpJA.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/W8kmNRQAdAF8J68TEehTeKALKD2sgi2aG6JAsYNR.jpg\\\"]\"', 6, 1, '2025-08-20 10:46:08', '2025-08-21 09:47:44'),
+(25, 'China classic furniture Special features Culture', 'china-classic-furniture-special-features-culture', 'China classic furniture Special features Culture', 12000.00, 200.00, 97, 'products/OklDBkRM7wIEVwWBj1UlLJ4MYzT0OuZnyj2PfpJA.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/W8kmNRQAdAF8J68TEehTeKALKD2sgi2aG6JAsYNR.jpg\\\"]\"', 6, 1, '2025-08-20 10:46:08', '2025-08-28 00:15:35'),
 (26, 'Home cookery furniture. Magnificent modern furniture of a home cookery.', 'home-cookery-furniture-magnificent-modern-furniture-of-a-home-cookery', 'Home cookery furniture. Magnificent modern furniture of a home cookery.', 10000.00, 200.00, 4, 'products/h51V32TqRbMA150XHrqxxGaqUdug4dMzJBVJEY5U.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/QvaRq6SYxj67mVcVvYY5Mt0HfjS2NOhuyQmFDDVL.jpg\\\"]\"', 6, 1, '2025-08-20 10:47:34', '2025-08-20 10:47:34'),
 (27, 'VICTORIOUS ONE DRAWER STUDY TABLE', 'victorious-one-drawer-study-table', 'Victorious wooden one drawer study table with elegant design made in Rajasthan, India. Discount upto 60% on eshopregal.in by natural living furniture. This wooden study table is solid and ergonomically sound. The table’s slatted design gives it a classic yet unique look. Table offers brilliant comfort to the user, and its elegant design and finish adds style to your decor.', 22180.00, 27720.00, 5, 'products/pcsRrank0WI6znKOM92efKriSQbSm1rrvLG17FN2.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/UnhMrfB9T7PFhLC4k1A2sp2qiDBiNWDNQi9U3IEC.jpg\\\"]\"', 6, 1, '2025-08-20 10:50:12', '2025-08-20 10:50:12'),
-(28, 'Bad Home Furniture', 'bad-home-furniture', 'Bad Home Furniture', 20000.00, 2000.00, 5, 'products/gdSl0S1llgcUuk1OrlmPRlDuOFvTNbJ00SFcDPkr.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/FZSpWdkNLHS548THJQIeIojRMsWvid7ZQCu2O0qy.jpg\\\"]\"', 6, 1, '2025-08-20 10:51:34', '2025-08-20 10:51:34'),
-(29, 'Contemporary elegant luxury living room', 'contemporary-elegant-luxury-living-room', 'Contemporary elegant luxury living room', 20000.00, 2000.00, 5, 'products/tKTyEpkwKCFiLmsrPX0LiJejAP0oZmC0n0KzYeSy.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/DVEhuWq8timgY6vHaXnrew0RU1sEyPpRTPxDSYQl.jpg\\\"]\"', 6, 1, '2025-08-20 10:52:47', '2025-08-20 10:52:47'),
-(30, 'Berry Fabric 1-Seater Sofa - Brown', 'berry-fabric-1-seater-sofa-brown', 'Berry Fabric 1-Seater Sofa - Brown', 300.00, 20.00, 3, 'products/CjtOdtJQgupw3C8RohWb2YtARfmBiOUnuMp8yb6z.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/ywEqEIJXUT2z9Fpgp79WnKNKzMaK0zdtpvwbOnqp.jpg\\\"]\"', 6, 1, '2025-08-20 11:11:55', '2025-08-20 11:11:55'),
+(28, 'Bad Home Furniture', 'bad-home-furniture', 'Bad Home Furniture', 20000.00, 2000.00, 1, 'products/gdSl0S1llgcUuk1OrlmPRlDuOFvTNbJ00SFcDPkr.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/FZSpWdkNLHS548THJQIeIojRMsWvid7ZQCu2O0qy.jpg\\\"]\"', 6, 1, '2025-08-20 10:51:34', '2025-08-28 00:39:16'),
+(29, 'Contemporary elegant luxury living room', 'contemporary-elegant-luxury-living-room', 'Contemporary elegant luxury living room', 20000.00, 2000.00, 4, 'products/tKTyEpkwKCFiLmsrPX0LiJejAP0oZmC0n0KzYeSy.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/DVEhuWq8timgY6vHaXnrew0RU1sEyPpRTPxDSYQl.jpg\\\"]\"', 6, 1, '2025-08-20 10:52:47', '2025-08-28 00:16:06'),
+(30, 'Berry Fabric 1-Seater Sofa - Brown', 'berry-fabric-1-seater-sofa-brown', 'Berry Fabric 1-Seater Sofa - Brown', 300.00, 20.00, 1, 'products/CjtOdtJQgupw3C8RohWb2YtARfmBiOUnuMp8yb6z.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/ywEqEIJXUT2z9Fpgp79WnKNKzMaK0zdtpvwbOnqp.jpg\\\"]\"', 6, 1, '2025-08-20 11:11:55', '2025-08-28 00:13:49'),
 (31, 'Engineered Wood Wooden Home Furnitures', 'engineered-wood-wooden-home-furnitures', 'Engineered Wood Wooden Home Furnitures', 3424.00, 32.00, 9, 'products/p9oF1ciJzM5gCdF0TaFpzDLIAUx0rRwsIkp8wPI4.png', '\"[\\\"products\\\\\\/gallery\\\\\\/CgCrjzsNhC3wSUKzaVyjim4vPFgQ7bY2KMBuwEFa.png\\\"]\"', 6, 1, '2025-08-20 11:24:40', '2025-08-20 11:24:40'),
 (32, 'Rustic furniture Table Bedroom Furniture Sets Living room, bedroom, angle, furniture,', 'rustic-furniture-table-bedroom-furniture-sets-living-room-bedroom-angle-furniture', 'Rustic furniture Table Bedroom Furniture Sets Living room, bedroom, angle, furniture,', 123456.00, 3245.00, 23, 'products/I4501SbLmoQ6REo00PAEOKGn3eBctylGM9R8vhxC.png', '\"[\\\"products\\\\\\/gallery\\\\\\/JZ5NpIdD4oSvBdfkqNy3omwuFbb2WK6GjtKRDyju.png\\\"]\"', 6, 1, '2025-08-20 11:26:00', '2025-08-20 11:26:00'),
-(33, 'Chair', 'chair', 'Chair', 1234.00, 3.00, 42, 'products/o2Oc4iUvkb4Sd5s8lsqDWJaSddTLdBRHz9CwyuuY.png', '\"[\\\"products\\\\\\/gallery\\\\\\/ab8UDN57Tix7pK9Nqn3cjgGjcOMK4n5HzdOmsQzs.png\\\"]\"', 6, 1, '2025-08-20 11:27:07', '2025-08-20 15:33:14'),
-(34, 'Wooden Furniture', 'wooden-furniture', 'Wooden Furniture', 543.00, 34.00, 34, 'products/8KAvSQYTCRylFJhbVbBJVVH7A2YSsZQxYZrg3fpo.png', '\"[\\\"products\\\\\\/gallery\\\\\\/GTdVdWXp0x1fcGvXZiFOiSXEi83vvQpVCpZh3Krz.png\\\"]\"', 6, 1, '2025-08-20 11:29:51', '2025-08-20 15:33:03');
+(33, 'Chair', 'chair', 'Chair', 1234.00, 3.00, 40, 'products/o2Oc4iUvkb4Sd5s8lsqDWJaSddTLdBRHz9CwyuuY.png', '\"[\\\"products\\\\\\/gallery\\\\\\/ab8UDN57Tix7pK9Nqn3cjgGjcOMK4n5HzdOmsQzs.png\\\"]\"', 6, 1, '2025-08-20 11:27:07', '2025-08-28 00:15:09'),
+(35, 'test product catelog13245', 'test-product-catelog13245', 'sadf', 120.00, 20.00, 20, 'products/llY0KHhgc2RqLPEggZ06rV9BfhQzy3yh1E0P876N.jpg', '\"[\\\"products\\\\\\/gallery\\\\\\/59XGIhzoDgkTaSVIj0XBKZKmd1xfGtUV1kOw6LXC.jpg\\\"]\"', 6, 0, '2025-08-26 01:02:05', '2025-08-28 00:26:33');
 
 -- --------------------------------------------------------
 
@@ -580,22 +554,16 @@ CREATE TABLE `product_qr_codes` (
 --
 
 INSERT INTO `product_qr_codes` (`id`, `product_id`, `code`, `coin_reward`, `is_used`, `path`, `used_at`, `used_by`, `created_at`, `updated_at`) VALUES
-(2, 9, 'cbe1bef3-bde0-46c5-8808-937edc29736f', '10', 0, 'qr_codes/cbe1bef3-bde0-46c5-8808-937edc29736f.png', NULL, NULL, '2025-08-05 05:38:27', '2025-08-05 05:38:27'),
-(3, 9, 'dd221b75-d646-4430-b5b5-b31a3624dde3', '20', 0, 'qr_codes/dd221b75-d646-4430-b5b5-b31a3624dde3.png', NULL, NULL, '2025-08-05 05:38:27', '2025-08-05 05:38:27'),
-(4, 9, '6a75833f-1c0c-48d4-8d49-2f4ea3d0a330', '30', 0, 'qr_codes/6a75833f-1c0c-48d4-8d49-2f4ea3d0a330.png', NULL, NULL, '2025-08-05 05:38:27', '2025-08-05 05:38:27'),
-(5, 9, 'e611d3fb-05d4-43f6-81e3-788062163f2a', '40', 0, 'qr_codes/e611d3fb-05d4-43f6-81e3-788062163f2a.png', NULL, NULL, '2025-08-05 05:38:27', '2025-08-05 05:38:27'),
-(6, 9, 'b1fb4036-20ae-4048-9509-587e9e511743', '50', 1, 'qr_codes/b1fb4036-20ae-4048-9509-587e9e511743.png', '2025-08-06 05:31:38', 7, '2025-08-05 05:38:28', '2025-08-06 05:31:38'),
-(8, 10, '338200e9-d429-41df-a708-e5bdc064ee9c', '10', 1, 'qr_codes/338200e9-d429-41df-a708-e5bdc064ee9c.png', '2025-08-06 05:18:30', 7, '2025-08-06 05:16:49', '2025-08-06 05:18:30'),
-(44, 10, '2e8fbb29-daff-49a0-beef-5be5ed9e59fc', '14', 0, 'qr_codes/2e8fbb29-daff-49a0-beef-5be5ed9e59fc.png', NULL, NULL, '2025-08-19 12:09:22', '2025-08-19 12:09:22'),
-(45, 10, '4e6002eb-a9d8-4940-8e64-f19badd625f6', '99', 0, 'qr_codes/4e6002eb-a9d8-4940-8e64-f19badd625f6.png', NULL, NULL, '2025-08-19 12:09:22', '2025-08-19 12:09:22'),
-(46, 10, 'ec316667-638f-442d-b390-a6eb721318ca', '91', 0, 'qr_codes/ec316667-638f-442d-b390-a6eb721318ca.png', NULL, NULL, '2025-08-19 12:09:22', '2025-08-19 12:09:22'),
-(47, 10, '9a3f9ea4-044c-460f-9576-21a89170e693', '23', 0, 'qr_codes/9a3f9ea4-044c-460f-9576-21a89170e693.png', NULL, NULL, '2025-08-19 12:09:22', '2025-08-19 12:09:22'),
-(48, 10, 'ff0bbc00-743b-4994-bc15-df2df566c23d', '73', 0, 'qr_codes/ff0bbc00-743b-4994-bc15-df2df566c23d.png', NULL, NULL, '2025-08-19 12:09:22', '2025-08-19 12:09:22'),
-(49, 10, '15f06660-e208-48e7-a5f9-c08e264aadd4', '74', 0, 'qr_codes/15f06660-e208-48e7-a5f9-c08e264aadd4.png', NULL, NULL, '2025-08-19 12:09:23', '2025-08-19 12:09:23'),
-(50, 10, '0bd87026-350b-4794-92b5-b7fc9719b726', '91', 0, 'qr_codes/0bd87026-350b-4794-92b5-b7fc9719b726.png', NULL, NULL, '2025-08-19 12:09:23', '2025-08-19 12:09:23'),
-(51, 10, '310cfabd-498d-4b0e-a4e4-a84c261a8f53', '23', 0, 'qr_codes/310cfabd-498d-4b0e-a4e4-a84c261a8f53.png', NULL, NULL, '2025-08-19 12:09:23', '2025-08-19 12:09:23'),
-(52, 10, 'd40dcbce-5d67-4f41-a8d5-94fd632842c3', '11', 0, 'qr_codes/d40dcbce-5d67-4f41-a8d5-94fd632842c3.png', NULL, NULL, '2025-08-19 12:09:23', '2025-08-19 12:09:23'),
-(53, 10, '0f61be6e-9fc9-4b41-8b72-4fd6927290fb', '79', 0, 'qr_codes/0f61be6e-9fc9-4b41-8b72-4fd6927290fb.png', NULL, NULL, '2025-08-19 12:09:23', '2025-08-19 12:09:23');
+(64, 9, 'f729fc2e-4aff-4858-8a23-9f6b2f4b47bd', '49', 0, 'qr_codes/f729fc2e-4aff-4858-8a23-9f6b2f4b47bd.png', NULL, NULL, '2025-08-26 01:11:24', '2025-08-26 01:11:24'),
+(65, 9, '8779e7aa-4564-4674-98ae-06df5a57551f', '77', 0, 'qr_codes/8779e7aa-4564-4674-98ae-06df5a57551f.png', NULL, NULL, '2025-08-26 01:11:24', '2025-08-26 01:11:24'),
+(66, 9, '41b08694-6494-4139-bcd4-87318f8a2a58', '23', 0, 'qr_codes/41b08694-6494-4139-bcd4-87318f8a2a58.png', NULL, NULL, '2025-08-26 01:11:25', '2025-08-26 01:11:25'),
+(67, 9, '68ea7e5d-bd01-4a24-967e-d3e76ba5ed41', '87', 0, 'qr_codes/68ea7e5d-bd01-4a24-967e-d3e76ba5ed41.png', NULL, NULL, '2025-08-26 01:11:25', '2025-08-26 01:11:25'),
+(68, 9, '19912459-a88f-48b9-9e43-48478e9552c7', '32', 0, 'qr_codes/19912459-a88f-48b9-9e43-48478e9552c7.png', NULL, NULL, '2025-08-26 01:11:26', '2025-08-26 01:11:26'),
+(69, 9, '42db5f3a-7cb0-450f-a86b-c8b7c332d77c', '26', 0, 'qr_codes/42db5f3a-7cb0-450f-a86b-c8b7c332d77c.png', NULL, NULL, '2025-08-26 01:11:26', '2025-08-26 01:11:26'),
+(70, 9, '2b42b237-8835-436f-b3f2-b05e6e7bd895', '96', 0, 'qr_codes/2b42b237-8835-436f-b3f2-b05e6e7bd895.png', NULL, NULL, '2025-08-26 01:11:27', '2025-08-26 01:11:27'),
+(71, 9, '0a19d452-15b7-4f65-b031-d25a9a50da58', '64', 0, 'qr_codes/0a19d452-15b7-4f65-b031-d25a9a50da58.png', NULL, NULL, '2025-08-26 01:11:28', '2025-08-26 01:11:28'),
+(72, 9, '33f526ea-779c-4fa5-8077-7c2098047254', '75', 0, 'qr_codes/33f526ea-779c-4fa5-8077-7c2098047254.png', NULL, NULL, '2025-08-26 01:11:28', '2025-08-26 01:11:28'),
+(73, 9, '981224af-6bff-439f-a236-16dff04ab37e', '97', 0, 'qr_codes/981224af-6bff-439f-a236-16dff04ab37e.png', NULL, NULL, '2025-08-26 01:11:29', '2025-08-26 01:11:29');
 
 -- --------------------------------------------------------
 
@@ -686,7 +654,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `wallet`, `profile_image`) VALUES
 (5, 'Admin User', 'admin@gmail.com', '6375064195', '$2y$12$d72LaHv/5v3elvzKwZvBB.R7JclCyfT9FjdQkAwg4JuJ7n1njFsvC', NULL, '2025-08-02 04:01:17', '2025-08-21 09:48:38', 'admin', 12800.00, NULL),
 (6, 'Normal User', 'user@example.com', NULL, '$2y$12$D.SWsAV8JYFRQEjDPWiUzOioBYpbceJx0rdZvBV2RYtiCXrEk/cqC', NULL, '2025-08-02 04:01:17', '2025-08-12 04:46:59', 'user', 0.00, NULL),
-(7, 'chandan', 'chandan@gmail.com', '6377562310', '$2y$12$ph6ZQ4I/rnd5ppul1O00GOh/fhXkyoQoI5cFaSmi2Hex0Q8pmUU2e', NULL, '2025-08-04 16:25:50', '2025-08-21 10:04:38', 'user', 125766.00, 'profile_images/lVj034D8PMFq1qai5N8smbHrUl9mGwrQQfrUFHTl.jpg'),
+(7, 'chandan', 'chandan@gmail.com', '6377562310', '$2y$12$ph6ZQ4I/rnd5ppul1O00GOh/fhXkyoQoI5cFaSmi2Hex0Q8pmUU2e', NULL, '2025-08-04 16:25:50', '2025-08-28 00:39:16', 'user', 38944.00, 'profile_images/lVj034D8PMFq1qai5N8smbHrUl9mGwrQQfrUFHTl.jpg'),
 (9, 'Pawan Verma1', 'pawanwaplia1@gmail.com\n', NULL, '$2y$12$5iNqfDH5Njr4u.AWBAzFC.0iWdJpdYEXJtwlytfTGRYOK4AdURi8.', NULL, '2025-08-05 10:14:29', '2025-08-06 05:36:44', 'user', 8.00, 'profile_images/lZN8ySM1S5DUcOB61v0WgjIoJahUKcCcIFYsi1ms.png'),
 (10, 'rahul', 'rahul@gmail.com', NULL, '$2y$12$IjjJE9YZkR0iXOwDxZIVv.W0QF3UNjGR3W0Za9LcODVf869MnhtHK', NULL, '2025-08-05 12:46:34', '2025-08-05 12:46:34', 'user', 0.00, NULL),
 (11, 'kailash', 'kailash@gmail.com', NULL, '$2y$12$2BYRX25PIGsIZgROPxTxvebgKGerIprB8aE0HbQpZMdXs.lWFtsQm', NULL, '2025-08-05 15:34:18', '2025-08-05 15:38:13', 'user', 0.00, 'profile_images/L7L3boPfqsck9MXil1YjvsG8g4hsRcdWaXCVNkTC.jpg'),
@@ -767,7 +735,18 @@ INSERT INTO `wallet_transactions` (`id`, `user_id`, `type`, `amount`, `message`,
 (38, 7, 'credit', 1000.00, 'Your Order cancelled. Transaction ID: . Amount refunded.', NULL, 'TXN20250821092248IKJZ', 125766.00, '2025-08-21 09:22:48', '2025-08-21 09:22:48', 'pending', '\"wallet\"'),
 (39, 7, 'debit', 1000.00, 'Your Order has been placed. Transaction ID: TXN20250821092412HQKP.', NULL, 'TXN20250821092412HQKP', 126766.00, '2025-08-21 09:24:12', '2025-08-21 09:24:12', 'pending', '\"wallet\"'),
 (41, 7, 'debit', 11800.00, 'Your Order has been placed.', NULL, 'TXN202508210947442LZW', 125766.00, '2025-08-21 09:47:44', '2025-08-21 09:47:44', 'pending', '\"wallet\"'),
-(43, 7, 'credit', 11800.00, 'Your Order has been returned. Transaction ID: TXN202508210947442LZW. Amount refunded.', NULL, 'TXN20250821100438GKNE', 113966.00, '2025-08-21 10:04:38', '2025-08-21 10:04:38', 'completed', '\"wallet\"');
+(43, 7, 'credit', 11800.00, 'Your Order has been returned. Transaction ID: TXN202508210947442LZW. Amount refunded.', NULL, 'TXN20250821100438GKNE', 113966.00, '2025-08-21 10:04:38', '2025-08-21 10:04:38', 'completed', '\"wallet\"'),
+(44, 7, 'debit', 18000.00, 'Your Order has been placed.', NULL, 'TXN202508260638201K6L', 125766.00, '2025-08-26 01:08:20', '2025-08-26 01:08:20', 'completed', '\"wallet\"'),
+(45, 7, 'debit', 280.00, 'Your Order has been placed.', NULL, 'TXN20250826063918F3HU', 107766.00, '2025-08-26 01:09:18', '2025-08-26 01:09:18', 'completed', '\"wallet\"'),
+(46, 7, 'debit', 18000.00, 'Your Order has been placed.', NULL, 'TXN20250828051637UIXX', 107486.00, '2025-08-27 23:46:37', '2025-08-27 23:46:37', 'completed', '\"wallet\"'),
+(47, 7, 'debit', 1231.00, 'Your Order has been placed.', NULL, 'TXN20250828051703VKN6', 89486.00, '2025-08-27 23:47:03', '2025-08-27 23:47:03', 'completed', '\"wallet\"'),
+(48, 7, 'debit', 18000.00, 'Your Order has been placed.', NULL, 'TXN20250828054001O2EC', 88255.00, '2025-08-28 00:10:01', '2025-08-28 00:10:01', 'completed', '\"wallet\"'),
+(49, 7, 'debit', 280.00, 'Your Order has been placed.', NULL, 'TXN20250828054349PJIS', 70255.00, '2025-08-28 00:13:49', '2025-08-28 00:13:49', 'completed', '\"wallet\"'),
+(50, 7, 'debit', 1231.00, 'Your Order has been placed.', NULL, 'TXN20250828054509QHHC', 69975.00, '2025-08-28 00:15:09', '2025-08-28 00:15:09', 'completed', '\"wallet\"'),
+(51, 7, 'debit', 11800.00, 'Your Order has been placed.', NULL, 'TXN20250828054535OSFL', 68744.00, '2025-08-28 00:15:35', '2025-08-28 00:15:35', 'completed', '\"wallet\"'),
+(52, 7, 'debit', 18000.00, 'Your Order has been placed.', NULL, 'TXN20250828054606XPT4', 56944.00, '2025-08-28 00:16:06', '2025-08-28 00:16:06', 'completed', '\"wallet\"'),
+(53, 7, 'credit', 18000.00, 'Your Order has been cancelled. Transaction ID: TXN20250828054606XPT4. Amount refunded.', NULL, 'TXN20250828054614Z7CE', 38944.00, '2025-08-28 00:16:14', '2025-08-28 00:16:14', 'completed', '\"wallet\"'),
+(54, 7, 'debit', 18000.00, 'Your Order has been placed.', NULL, 'TXN20250828060916LCI8', 56944.00, '2025-08-28 00:39:16', '2025-08-28 00:39:16', 'completed', '\"wallet\"');
 
 --
 -- Indexes for dumped tables
@@ -858,8 +837,7 @@ ALTER TABLE `model_has_roles`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `orders_order_number_unique` (`order_number`),
-  ADD KEY `orders_user_id_foreign` (`user_id`),
-  ADD KEY `fk_orders_address_id` (`address_id`);
+  ADD KEY `orders_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `password_reset_tokens`
@@ -958,7 +936,7 @@ ALTER TABLE `wallet_transactions`
 -- AUTO_INCREMENT for table `addresses`
 --
 ALTER TABLE `addresses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `bank_accounts`
@@ -1000,7 +978,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1018,7 +996,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_catalog`
 --
 ALTER TABLE `product_catalog`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `product_lists`
@@ -1030,7 +1008,7 @@ ALTER TABLE `product_lists`
 -- AUTO_INCREMENT for table `product_qr_codes`
 --
 ALTER TABLE `product_qr_codes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `product_user_scans`
@@ -1054,7 +1032,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wallet_transactions`
 --
 ALTER TABLE `wallet_transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- Constraints for dumped tables
@@ -1088,7 +1066,6 @@ ALTER TABLE `model_has_roles`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_orders_address_id` FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
