@@ -6,26 +6,34 @@
 
     @if($bank)
        <div class="card p-3 mb-4 shadow-sm">
-    <div class="row text-center">
+    <div class="row ">
         <div class="col">
             <strong>Account Holder:</strong>
-            <div>{{ $bank->account_holder_name }}</div>
-        </div>
+            {{ $bank->account_holder_name }}
+        </div> </div>
+            <div class="row ">
+
         <div class="col">
             <strong>Bank Name:</strong>
-            <div>{{ $bank->bank_name }}</div>
+            {{ $bank->bank_name }}
         </div>
+        </div>
+            <div class="row ">
         <div class="col">
             <strong>Account Number:</strong>
-            <div>{{ $bank->account_number }}</div>
+            {{ $bank->account_number }}
         </div>
+        </div>
+            <div class="row ">
         <div class="col">
             <strong>IFSC Code:</strong>
-            <div>{{ $bank->ifsc_code }}</div>
+            {{ $bank->ifsc_code }}
         </div>
+        </div>
+            <div class="row ">
         <div class="col">
             <strong>UPI Id:</strong>
-            <div>{{ $bank->upi }}</div>
+           {{ $bank->upi }}
         </div>
     </div>
 
@@ -47,30 +55,30 @@
     <div id="edit-form" class="card p-4 shadow-sm" style="display: {{ $bank ? 'none' : 'block' }};">
         <form id="bankEditForm">
             @csrf
-            <div class="mb-3">
+            <div class="col">
                 <label class="form-label">Account Holder Name</label>
                 <input type="text" name="account_holder_name" class="form-control" value="{{ $bank->account_holder_name ?? '' }}" required>
             </div>
 
-            <div class="mb-3">
+            <div class="col">
                 <label class="form-label">Bank Name</label>
                 <input type="text" name="bank_name" class="form-control" value="{{ $bank->bank_name ?? '' }}" required>
             </div>
 
-            <div class="mb-3">
+            <div class="col">
                 <label class="form-label">Account Number</label>
                 <input type="text" name="account_number" class="form-control" value="{{ $bank->account_number ?? '' }}" required>
             </div>
 
-            <div class="mb-3">
+            <div class="col">
                 <label class="form-label">IFSC Code</label>
                 <input type="text" name="ifsc_code" class="form-control" value="{{ $bank->ifsc_code ?? '' }}" required>
             </div>
-              <div class="mb-3">
+              <div class="col">
                 <label class="form-label">Upi Id</label>
                 <input type="text" name="upi" class="form-control" value="{{ $bank->upi ?? '' }}" required>
             </div>
-
+<br>
             <div class="d-flex justify-content-between">
                 <button type="submit" class="btn btn-success">Save Bank Details</button>
                 <button type="button" class="btn btn-secondary" id="cancel-edit">Cancel</button>

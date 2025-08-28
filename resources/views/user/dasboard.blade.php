@@ -81,7 +81,7 @@
             <form id="qrFilterForm" class="d-flex">
 <input type="date" name="date" id="filterDate" class="form-control me-2"
        value="<?php echo date('Y-m-d'); ?>">                <button type="submit" class="btn btn-primary">Filter</button>
-                <button type="button" id="resetFilter" class="btn btn-secondary ms-2">Reset</button>
+                {{-- <button type="button" id="resetFilter" class="btn btn-secondary ms-2">Reset</button> --}}
             </form>
         </div>
 </div>

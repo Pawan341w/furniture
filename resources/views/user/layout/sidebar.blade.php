@@ -38,23 +38,23 @@
       </a>
     </li>
 
-    
+
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user.products.index') }}">
-        <span class="menu-title">Product List</span>
+        <span class="menu-title">Gift Card</span>
         <i class="mdi mdi-cart menu-icon"></i>
         </a>
     </li>
-    
+
     <li class="nav-item">
       <a class="nav-link" href="{{ route('orders.show') }}">
         <span class="menu-title">My Order</span>
         <!--<i class="mdi mdi-format-list-bulleted menu-icon"></i>-->
        <i class="mdi mdi-package-variant-closed menu-icon"></i>
-       
+
       </a>
     </li>
-    
+
     <li class="nav-item">
         <a class="nav-link text-center" href="{{ route('wallet.history') }}">
                 <span class="menu-title">History</span>
@@ -77,23 +77,23 @@
     <i class="mdi mdi-bank menu-icon d-block"></i>
     <small>Bank</small>
   </a>
-  
+
   <!--<a class="nav-link text-center" href="{{ route('bank.details.index') }}">-->
   <!--</a>-->
-  
+
   <a class="nav-link text-center" href="{{ route('withdraw.index') }}">
     <i class="mdi mdi-cash-multiple menu-icon d-block"></i>
     <small>Withdraw</small>
   </a>
-  
+
   <a class="nav-link text-center" href="{{ route('user.products.index') }}">
     <i class="mdi mdi-cart menu-icon d-block"></i>
-    <small>Products</small>
+    <small>Gift Card</small>
   </a>
-  
+
   <a class="nav-link text-center" href="{{ route('wallet.history') }}">
     <i class="mdi mdi-history menu-icon d-block"></i>
     <small>History</small>
   </a>
-  
+
 </nav>

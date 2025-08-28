@@ -9,7 +9,7 @@
     white-space: pre-line;
 }
 </style>
-@section('title', 'Product List')
+@section('title', 'Gift Card')
 
 @section('content')
 <div class="container py-4">
@@ -21,7 +21,7 @@
 
     {{-- Header and Manage Address Button --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Product List</h2>
+        <h2>Gift Card</h2>
         <a href="{{ route('address.index') }}" class="btn btn-outline-primary d-none d-md-inline-block">Manage Addresses</a>
     </div>
 
