@@ -18,6 +18,8 @@ class CreateBankAccountsTable extends Migration
             $table->string('bank_name');
             $table->string('account_number');
             $table->string('ifsc_code');
+            $table->string('upi')->nullable();
+
             $table->timestamps();
 
             // Foreign key constraint to users table

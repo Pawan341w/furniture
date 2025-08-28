@@ -5,34 +5,40 @@
     <h2 class="mb-4">Your Bank Account</h2>
 
     @if($bank)
-        <div class="card p-3 mb-4 shadow-sm">
-            <div class="row">
-                <div class="col-md-3">
-                    <strong>Account Holder:</strong>
-                    <div>{{ $bank->account_holder_name }}</div>
-                </div>
-                <div class="col-md-3">
-                    <strong>Bank Name:</strong>
-                    <div>{{ $bank->bank_name }}</div>
-                </div>
-                <div class="col-md-3">
-                    <strong>Account Number:</strong>
-                    <div>{{ $bank->account_number }}</div>
-                </div>
-                <div class="col-md-3">
-                    <strong>IFSC Code:</strong>
-                    <div>{{ $bank->ifsc_code }}</div>
-                </div>
-            </div>
-            <div class="mt-3 text-end">
-                <button class="btn btn-warning btn-sm" id="edit-btn">Edit</button>
-                <form method="POST" action="{{ route('bank.details.delete') }}" class="d-inline" onsubmit="return confirmDelete();">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger btn-sm">Delete</button>
-                </form>
-            </div>
+       <div class="card p-3 mb-4 shadow-sm">
+    <div class="row text-center">
+        <div class="col">
+            <strong>Account Holder:</strong>
+            <div>{{ $bank->account_holder_name }}</div>
         </div>
+        <div class="col">
+            <strong>Bank Name:</strong>
+            <div>{{ $bank->bank_name }}</div>
+        </div>
+        <div class="col">
+            <strong>Account Number:</strong>
+            <div>{{ $bank->account_number }}</div>
+        </div>
+        <div class="col">
+            <strong>IFSC Code:</strong>
+            <div>{{ $bank->ifsc_code }}</div>
+        </div>
+        <div class="col">
+            <strong>UPI Id:</strong>
+            <div>{{ $bank->upi }}</div>
+        </div>
+    </div>
+
+    <div class="mt-3 text-end">
+        <button class="btn btn-warning btn-sm" id="edit-btn">Edit</button>
+        <form method="POST" action="{{ route('bank.details.delete') }}" class="d-inline" onsubmit="return confirmDelete();">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-danger btn-sm">Delete</button>
+        </form>
+    </div>
+</div>
+
     @else
         <div class="alert alert-info">No bank account added yet.</div>
     @endif
@@ -59,6 +65,10 @@
             <div class="mb-3">
                 <label class="form-label">IFSC Code</label>
                 <input type="text" name="ifsc_code" class="form-control" value="{{ $bank->ifsc_code ?? '' }}" required>
+            </div>
+              <div class="mb-3">
+                <label class="form-label">Upi Id</label>
+                <input type="text" name="upi" class="form-control" value="{{ $bank->upi ?? '' }}" required>
             </div>
 
             <div class="d-flex justify-content-between">

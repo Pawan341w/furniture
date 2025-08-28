@@ -1,13 +1,13 @@
 @extends('admin.layout.app')
-@section('title', 'Product Catalog')
+@section('title', 'Gift Cards')
 
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between mb-3">
-        <h4>Product Catalog</h4>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal">+ Add Product</button>
+        <h4>Gift Cards</h4>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal">+ Add Gift</button>
     </div>
 
     {{-- Filters --}}
@@ -52,9 +52,9 @@
 </div>
 
 {{-- Loader --}}
-<div id="ajaxLoader" 
+<div id="ajaxLoader"
      style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-            background:rgba(255,255,255,0.7); z-index:2000; 
+            background:rgba(255,255,255,0.7); z-index:2000;
             display:flex; justify-content:center; align-items:center;">
     <div class="spinner-border text-primary" role="status" style="width:3rem; height:3rem;">
         <span class="visually-hidden">Loading...</span>
@@ -157,146 +157,95 @@
 </div>
 
 @endsection
+
 @section('script')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
-function showLoader(){
-    $("#ajaxLoader").fadeIn(150).css("display","flex");
-    $(".createBtn, .updateBtn").prop("disabled", true);
-}
-function hideLoader(){
-    $("#ajaxLoader").fadeOut(150, function(){
-        $(this).css("display","none");
+$(document).ready(function(){
+
+    // CSRF setup
+    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+
+    function showLoader(){ $("#ajaxLoader").fadeIn(150).css("display","flex"); $(".createBtn, .updateBtn").prop("disabled", true); }
+    function hideLoader(){ $("#ajaxLoader").fadeOut(150,function(){ $(this).css("display","none"); }); $(".createBtn, .updateBtn").prop("disabled", false); }
+
+    // Dynamic gallery
+    $(document).on('click', '.addGalleryBtn', function(){
+        let wrapper = $(this).closest('#galleryWrapper, #editGalleryWrapper');
+        wrapper.append(`<div class="input-group mb-2">
+            <input type="file" name="gallery[]" class="form-control">
+            <button type="button" class="btn btn-danger removeGalleryBtn">-</button>
+        </div>`);
     });
-    $(".createBtn, .updateBtn").prop("disabled", false);
-}
+    $(document).on('click', '.removeGalleryBtn', function(){ $(this).closest('.input-group').remove(); });
 
-$.ajaxSetup({
-    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
-});
+    // Load products
+    function loadProducts(){
+        let name = $('#filter_name').val() || '';
+        let category = $('#filter_category').val() || '';
+        let status = $('#filter_status').val() || '';
+        showLoader();
+        $.get("{{ route('product-catalog.index') }}", { name, category, status }, function(products){
+            let rows = '';
+            products.forEach((p,i)=>{
+                rows += `<tr>
+                    <td>${i+1}</td>
+                    <td>${p.image ? `<img src="/storage/${p.image}" width="50" height="50">` : '-'}</td>
+                    <td>${p.name}</td>
+                    <td>${p.price}</td>
+                    <td>${p.category?.name ?? '-'}</td>
+                    <td>
+                        <select class="statusDropdown form-control" data-id="${p.id}">
+                            <option value="1" ${p.status ? 'selected' : ''}>Active</option>
+                            <option value="0" ${!p.status ? 'selected' : ''}>Inactive</option>
+                        </select>
+                    </td>
+                    <td>${new Date(p.created_at).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning editBtn" data-id="${p.id}">Edit</button>
+                        <button class="btn btn-sm btn-danger deleteBtn" data-id="${p.id}">Delete</button>
+                    </td>
+                </tr>`;
+            });
+            if($.fn.DataTable.isDataTable('#product_table')) $('#product_table').DataTable().destroy();
+            $('#product_table tbody').html(rows);
+            $('#product_table').DataTable({ pageLength: 10 });
+        }).always(()=> hideLoader());
+    }
 
-// Dynamic gallery fields
-$(document).on('click', '.addGalleryBtn', function(){
-    let wrapper = $(this).closest('#galleryWrapper, #editGalleryWrapper');
-    wrapper.append(`<div class="input-group mb-2">
-        <input type="file" name="gallery[]" class="form-control">
-        <button type="button" class="btn btn-danger removeGalleryBtn">-</button>
-    </div>`);
-});
-$(document).on('click', '.removeGalleryBtn', function(){
-    $(this).closest('.input-group').remove();
-});
-
-// Load products
-function loadProducts(){
-    let name = $('#filter_name').val() || '';
-    let category = $('#filter_category').val() || '';
-    let status = $('#filter_status').val() || '';
-    showLoader();
-    $.get("{{ route('product-catalog.index') }}", { name, category, status }, function(products){
-        let rows = '';
-        products.forEach((p,i)=>{
-            rows += `<tr>
-                <td>${i+1}</td>
-                <td>${p.image ? `<img src="/storage/${p.image}" width="50" height="50">` : '-'}</td>
-                <td>${p.name}</td>
-                <td>${p.price}</td>
-                <td>${p.category?.name ?? '-'}</td>
-                <td>
-                    <select class="statusDropdown form-control" data-id="${p.id}">
-                        <option value="1" ${p.status ? 'selected' : ''}>Active</option>
-                        <option value="0" ${!p.status ? 'selected' : ''}>Inactive</option>
-                    </select>
-                </td>
-                <td>${new Date(p.created_at).toLocaleDateString()}</td>
-                <td>
-                    <button class="btn btn-sm btn-warning editBtn" data-id="${p.id}">Edit</button>
-                    <button class="btn btn-sm btn-danger deleteBtn" data-id="${p.id}">Delete</button>
-                </td>
-            </tr>`;
-        });
-        $('#product_table tbody').html(rows);
-    }).always(()=> hideLoader());
-}
-
-// Filters
-$('#filter_name, #filter_category, #filter_status').on('change keyup', function(){ loadProducts(); });
-
-$(document).ready(function () {
+    $('#filter_name, #filter_category, #filter_status').on('change keyup', loadProducts);
     loadProducts();
 
-// CREATE
-$('#createProductForm').on('submit', function(e){
-    e.preventDefault();
-    let form = this; // store form reference
-    let fd = new FormData(form);
-
-    showLoader();
-
-    $.ajax({
-        url: "{{ route('product-catalog.store') }}",
-        method: 'POST',
-        data: fd,
-        processData: false,
-        contentType: false,
-        success: function(res){ 
-            Swal.fire('Success', res.message,'success'); 
-            $('#createProductModal').modal('hide'); 
-            
-            // reset form safely
-            form.reset(); 
-            $('#galleryWrapper').html(`
-                <div class="input-group mb-2">
+    // CREATE
+    $('#createProductForm').on('submit', function(e){
+        e.preventDefault();
+        let fd = new FormData(this);
+        showLoader();
+        $.ajax({
+            url: "{{ route('product-catalog.store') }}",
+            method: 'POST', data: fd, processData: false, contentType: false,
+            success: function(res){
+                Swal.fire('Success', res.message,'success');
+                $('#createProductModal').modal('hide');
+                $('#createProductForm')[0].reset();
+                $('#galleryWrapper').html(`<div class="input-group mb-2">
                     <input type="file" name="gallery[]" class="form-control">
-                    <button type="button" class="btn btn-danger removeGalleryBtn">-</button>
-                </div>
-            `);
-
-            // reload table
-            loadProducts();
-
-            // fix stuck body
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').remove();
-        },
-           error: function(xhr) {
-       if (xhr.status === 422 || xhr.status===500) 
-{ 
-        let errors = xhr.responseJSON.errors;
-        let msg = '';
-
-        if (errors) {
-            $.each(errors, function(key, val){
-                msg += val[0] + '<br>';
-            });
-        }
-
-        // fallback to message/error
-        if (xhr.responseJSON.message) {
-            msg += xhr.responseJSON.message + '<br>';
-        }
-        if (xhr.responseJSON.error) {
-            msg += xhr.responseJSON.error + '<br>';
-        }
-
-        Swal.fire({
-            icon: 'error',
-            title: 'Validation Error',
-            html: msg
+                    <button type="button" class="btn btn-success addGalleryBtn">+</button>
+                </div>`);
+                loadProducts();
+                $('body').removeClass('modal-open'); $('.modal-backdrop').remove();
+            },
+            error: function(xhr){
+                let msg = '';
+                if(xhr.responseJSON?.errors){
+                    $.each(xhr.responseJSON.errors, (k,v)=>{ msg += v[0] + '<br>'; });
+                }
+                if(xhr.responseJSON?.message) msg += xhr.responseJSON.message + '<br>';
+                Swal.fire({ icon:'error', title:'Error', html: msg || 'Failed to create product' });
+            },
+            complete: hideLoader
         });
-
-    } else {
-        Swal.fire('Error', 'Failed to create product','error');
-    }
-},
-
-        complete: function(){ 
-            hideLoader();
-        }
     });
-});
-
 
     // EDIT
     $(document).on('click', '.editBtn', function(){
@@ -319,87 +268,34 @@ $('#createProductForm').on('submit', function(e){
     $('#editProductForm').on('submit', function(e){
         e.preventDefault();
         let id = $('#edit_id').val();
-        let fd = new FormData(this);
-        fd.append('_method','PUT');
+        let fd = new FormData(this); fd.append('_method','PUT');
         showLoader();
         $.ajax({
-            url: `/product-catalog/${id}`,
-            method: 'POST',
-            data: fd,
-            processData: false,
-            contentType: false,
-            success: res=>{ 
-                Swal.fire('Updated', res.message, 'success'); 
-                $('#editProductModal').modal('hide'); 
-                loadProducts();
+            url: `/product-catalog/${id}`, method:'POST', data:fd,
+            processData:false, contentType:false,
+            success: res=> { Swal.fire('Updated', res.message,'success'); $('#editProductModal').modal('hide'); loadProducts(); },
+            error: function(xhr){
+                let msg = '';
+                if(xhr.responseJSON?.errors) $.each(xhr.responseJSON.errors, (k,v)=> msg+=v[0]+'<br>');
+                if(xhr.responseJSON?.message) msg+=xhr.responseJSON.message+'<br>';
+                Swal.fire({ icon:'error', title:'Error', html: msg || 'Failed to update product' });
             },
-    error: function(xhr) {
-    if (xhr.status === 422 || xhr.status===500) { 
-        let errors = xhr.responseJSON.errors;
-        let msg = '';
-
-        if (errors) {
-            $.each(errors, function(key, val){
-                msg += val[0] + '<br>';
-            });
-        }
-
-        if (xhr.responseJSON.message) {
-            msg += xhr.responseJSON.message + '<br>';
-        }
-        if (xhr.responseJSON.error) {
-            msg += xhr.responseJSON.error + '<br>';
-        }
-
-        Swal.fire({
-            icon: 'error',
-            title: 'Validation Error',
-            html: msg
-        });
-
-    } 
-    
-    else {
-        Swal.fire('Error', 'Failed to create product','error');
-    }
-}
-,   complete: ()=> hideLoader()
+            complete: hideLoader
         });
     });
 
     // DELETE
     $(document).on('click', '.deleteBtn', function(){
         let id = $(this).data('id');
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'You will not be able to recover this product!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!'
-        }).then(result=>{
+        Swal.fire({ title:'Are you sure?', text:'You will not recover this product!', icon:'warning', showCancelButton:true, confirmButtonText:'Yes, delete it!'})
+        .then(result=>{
             if(result.isConfirmed){
                 showLoader();
                 $.ajax({
-                    url: `/product-catalog/${id}`,
-                    method: 'DELETE',
-                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    success: res=>{ Swal.fire('Deleted', res.message, 'success'); loadProducts(); },
-    error: function(xhr){
-            if(xhr.status === 422){ 
-                let errors = xhr.responseJSON.errors;
-                let msg = '';
-                $.each(errors, function(key, val){
-                    msg += val[0] + '<br>';
-                });
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Validation Error',
-                    html: msg
-                });
-            } else {
-                Swal.fire('Error', 'Failed to delete product','error');
-            }
-        },                    complete: ()=> hideLoader()
+                    url:`/product-catalog/${id}`, method:'DELETE',
+                    success: res=> { Swal.fire('Deleted', res.message,'success'); loadProducts(); },
+                    error:()=> Swal.fire('Error','Failed to delete product','error'),
+                    complete: hideLoader
                 });
             }
         });
@@ -407,41 +303,13 @@ $('#createProductForm').on('submit', function(e){
 
     // STATUS
     $(document).on('change', '.statusDropdown', function(){
-        let id = $(this).data('id');
-        let status = $(this).val();
+        let id = $(this).data('id'), status=$(this).val();
         showLoader();
-        $.ajax({
-            url: `/product-catalog/${id}/status`,
-            type: 'POST',
-                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-
-            data: { status },
-            success: res=> Swal.fire('Updated', res.message, 'success'),
-    error: function(xhr){
-            if(xhr.status === 422){ 
-                let errors = xhr.responseJSON.errors;
-                let msg = '';
-                $.each(errors, function(key, val){
-                    msg += val[0] + '<br>';
-                });
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Validation Error',
-                    html: msg
-                });
-            } else {
-                Swal.fire('Error', 'Failed to update status','error');
-            }
-        },            complete: ()=> hideLoader()
-        });
+        $.post(`/product-catalog/${id}/status`, { status }, function(res){ Swal.fire('Updated', res.message,'success'); })
+        .fail(()=> Swal.fire('Error','Failed to update status','error'))
+        .always(()=> hideLoader());
     });
-});
 
-$(document).ready(function () {
-    $('#product_table').DataTable({
-        pageLength: 10,
-
-    });
 });
 </script>
 @endsection

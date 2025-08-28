@@ -33,7 +33,7 @@
             </thead>
             <tbody>
                 @foreach($historys->where('type', 'debit') as $history)
-                <tr class="withdrawal-row 
+                <tr class="withdrawal-row
                     {{ $history->status == 'pending' ? 'table-warning' : '' }}
                     {{ $history->status == 'completed' ? 'table-success' : '' }}
                     {{ $history->status == 'failed' ? 'table-danger text-white' : '' }}"
@@ -112,6 +112,11 @@
                     <div class="col-5 fw-semibold text-muted">IFSC Code</div>
                     <div class="col-7" id="modal-ifsc-code">-</div>
                 </div>
+
+                <div class="row mb-1">
+                    <div class="col-5 fw-semibold text-muted">Upi Id</div>
+                    <div class="col-7" id="modal-upi">-</div>
+                </div>
             </div>
         </div>
     </div>
@@ -189,6 +194,8 @@
         $('#modal-bank-name').text(details.bank_name || 'N/A');
         $('#modal-account-number').text(details.account_number || 'N/A');
         $('#modal-ifsc-code').text(details.ifsc_code || 'N/A');
+                $('#modal-upi').text(details.upi || 'N/A');
+
 
         const modal = new bootstrap.Modal(document.getElementById('bankDetailsModal'));
         modal.show();

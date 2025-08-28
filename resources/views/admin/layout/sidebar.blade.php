@@ -39,7 +39,7 @@
 
 <li class="nav-item">
     <a class="nav-link" href="{{ route('product-catalog.view') }}">
-        <span class="menu-title">Products Catalog</span>
+        <span class="menu-title">Gift Cards </span>
         <i class="mdi mdi-package-variant menu-icon"></i>
     </a>
 </li>

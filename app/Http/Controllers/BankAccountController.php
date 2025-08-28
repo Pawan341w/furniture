@@ -23,6 +23,7 @@ class BankAccountController extends Controller
             'bank_name' => 'required|string|max:255',
             'account_number' => 'required|string|max:50',
             'ifsc_code' => 'required|string|max:20',
+            'upi'=>'required'
         ]);
 
         $bank = BankAccount::updateOrCreate(
@@ -32,6 +33,7 @@ class BankAccountController extends Controller
                 'bank_name' => $request->bank_name,
                 'account_number' => $request->account_number,
                 'ifsc_code' => $request->ifsc_code,
+                'upi'=>$request->upi
             ]
         );
 

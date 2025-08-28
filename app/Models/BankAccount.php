@@ -15,6 +15,7 @@ class BankAccount extends Model
         'bank_name',
         'account_number',
         'ifsc_code',
+        'upi',
     ];
 
     // Optional: Relationship to User

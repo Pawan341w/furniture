@@ -31,6 +31,8 @@ Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showRes
 Route::post('/reset-password', [ForgotPasswordController::class, 'reset'])->name('password.update');
 
 Route::get('/',[DashboardController::class,'index'])->name('dashboard')->middleware('auth');
+Route::post('/dashboard/qr-filter', [DashboardController::class, 'qrFilterByDate'])->name('qr.filter.by.date')->middleware('auth');
+
 Route::get('/scan/{code}', [ScanController::class, 'scan'])->name('product.qr.scan')->middleware('auth','role:user');;
 
 // Admin Routes
@@ -50,7 +52,7 @@ Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name(
 Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::resource('products', ProductController::class);
-Route::get('product', [ProductCatalogController::class, 'view'])->name('product-catalog.view');
+Route::get('gift-card', [ProductCatalogController::class, 'view'])->name('product-catalog.view');
 Route::resource('product-catalog', ProductCatalogController::class);
 Route::post('product-catalog/{id}/status',[ProductCatalogController::class,'updateStatus']);
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
@@ -94,11 +96,11 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/withdraw', [TransactionsController::class, 'request'])->name('withdraw.request');
     Route::get('/wallet-history', [TransactionsController::class, 'wallethistory'])->name('wallet.history');
     Route::get('/user-products', [ProductCatalogController::class, 'show_user_product'])->name('user.products.index');
-   
+
     Route::get('/address', [AddressController::class, 'index'])->name('address.index');
     Route::get('/address/create', [AddressController::class, 'create'])->name('address.create');
     Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
-    
+
     Route::get('/address/edit/{address}', [AddressController::class, 'edit'])->name('address.edit');
     Route::put('/address/update/{address}', [AddressController::class, 'update'])->name('address.update');
     Route::delete('/address/delete/{address}', [AddressController::class, 'destroy'])->name('address.destroy');
@@ -107,8 +109,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/orders/{order}', [OrderController::class, 'show_more_oder'])->name('orders.show.more');
     Route::post('/orders/{id}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
     // Route::get('/filter/product', [CategoryController::class, 'filterproduct'])->name('filter.product');
-    
-    
+
+
 
 });
 

@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 if (!function_exists('WalletTransaction_help')) {
     function WalletTransaction_help($request, $type, $message, $status = 'pending',$userId) {
         // $userId = Auth::id();
-       
+
 
         try {
              if($type=='debit')
@@ -27,10 +27,10 @@ if (!function_exists('WalletTransaction_help')) {
              }
             else
             {
-               $bankdetalis=(object) $request->bank_details; 
+               $bankdetalis=(object) $request->bank_details;
             }
-                 
-             
+
+
 
             DB::transaction(function () use ($request, $userId, $bankdetalis, $type, $message, $status) {
                 $user = User::where('id', $userId)->lockForUpdate()->first();
@@ -65,14 +65,16 @@ if (!function_exists('WalletTransaction_help')) {
                         "account_holder_name" => $bankdetalis->account_holder_name,
                         "bank_name"           => $bankdetalis->bank_name,
                         "account_number"      => $bankdetalis->account_number,
-                        "ifsc_code"           => $bankdetalis->ifsc_code
+                        "ifsc_code"           => $bankdetalis->ifsc_code,
+                                                "upi"           => $bankdetalis->upi
+
                     ],
                 ]);
                 if($type=='credit')
-                {                
+                {
                 $user->wallet += $request->amount;
 
-                    
+
                 }
                 else
                 {
